@@ -15,7 +15,7 @@ sudo apt-get install gconf-service libasound2 libatk1.0-0 libatk-bridge2.0-0 lib
 
  ## Problem №1
 
- ## Error: Failed to launch the browser process puppeteer
+ ### Error: Failed to launch the browser process puppeteer
 
  ### Solution: 
 
@@ -36,7 +36,7 @@ sudo apt-get install gconf-service libasound2 libatk1.0-0 libatk-bridge2.0-0 lib
 
 ## Problem №2
 
-## Error: Running as root without --no-sandbox is not supported.
+### Error: Running as root without --no-sandbox is not supported.
 
 ### Solution
 
