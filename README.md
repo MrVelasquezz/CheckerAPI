@@ -13,32 +13,32 @@ sudo apt-get install gconf-service libasound2 libatk1.0-0 libatk-bridge2.0-0 lib
 ```
 # Several problems and their solution
 
- ## Problem №1
+ ## 💢Problem №1💢
  =======================
- ### Error: Failed to launch the browser process puppeteer
- ### Solution: 
+ ### ❌Error: Failed to launch the browser process puppeteer❌
+ ### 📑Solution:📑
  I solved this problem with folowing command: 
  ```
  sudo apt-get install -y libgbm-dev
  ```
-### Description
+### 📑Description:📑
   In my case problem was with ```libgbm.so.1``` library.
-### Full error code
+### ❌Full error code:❌
   ```
   error while loading shared libraries: libgbm.so.1: cannot open shared object file: No such file or directory
   ```
 
-## Problem №2
+## 💢Problem №2💢
 =======================
-### Error: Running as root without --no-sandbox is not supported.
-### Solution
+### ❌Error: Running as root without --no-sandbox is not supported.❌
+### 📑Solution:📑
  I solved this problem by adding to ```puppeteer.launch()``` argument ```args: ['--no-sandbox', '--disable-setuid-sandbox']```
 
-### Description
+### 📑Description:📑
   No
   
-### Full error code: 
+### ❌Full error code:❌
   No
   
-## Warning
+## ❗️Warning❗️
 ### In this case installation of chromium-browser is not the solution. It causes errors and code 403 in site-firewall
