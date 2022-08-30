@@ -5,8 +5,7 @@ require('dotenv').config()
 
 pup.use(Stealth())
 
-const parserL = require('./src/engine/parserLauncher')
-const parserB = require('./src/engine/parser')
+const parser = require('./src/engine/parser')
 
 const app = express()
 
@@ -17,32 +16,17 @@ app.post('/check', async (req, res) => {
         const tel = req.body.phone.trim()
         if (tel.startsWith('+') && tel.length == 12) {
             try {
-                page = await parserL(pup)
+                const result = await parser(pup, tel)
+                res.json({
+                    phone: req.body.phone,
+                    valid: result
+                }).end()
+
             } catch (e) {
                 console.log(e)
                 res.json({
                     status: 'error'
                 }).end()
-            }
-            if (page[0] && page[0] != undefined) {
-                try {
-                    const response = await parserB(page[0], req.body.phone)
-
-                    res.json({
-                        phone: req.body.phone,
-                        valid: response
-                    }).end()
-
-                } catch (e) {
-                    res.json({
-                        status: 'error'
-                    }).end()
-                }
-                try {
-                    page[1].close()
-                } catch (e) {
-                    console.log(e)
-                }
             }
         } else {
             res.json({

@@ -1,33 +1,4 @@
-const inputCheck = (page) => {
-    return new Promise(async (res, rej) => {
-        try {
-            const d = await page.$eval('#phone', el => el.id)
-            if (d) {
-                res(d)
-            }
-            rej()
-        } catch (e) {
-            rej(e)
-        }
-    })
-}
-
-const buttonCheck = (page) => {
-    return new Promise(async (res, rej) => {
-        try {
-            const d = await page.$eval('.append-icon', el => [el.offsetTop, el.offsetLeft])
-            console.log(d)
-            if (d) {
-                res(d)
-            }
-            rej()
-        } catch (e) {
-            rej(e)
-        }
-    })
-}
-
-const validCheck = (page, phone) => {
+const validCheck = (page) => {
     return new Promise(async (res, rej) => {
         try {
             const dat = await page.$eval('.Wgyp', el => el.outerHTML)
@@ -51,7 +22,5 @@ const validCheck = (page, phone) => {
 }
 
 module.exports = {
-    inputCheck,
-    buttonCheck,
     validCheck
 }

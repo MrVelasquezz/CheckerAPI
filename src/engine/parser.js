@@ -1,32 +1,26 @@
 const {
-    inputCheck,
-    buttonCheck,
     validCheck
 } = require('./checkers/checker')
 
-module.exports = (page, number) => {
+module.exports = (pup, number) => {
     return new Promise(async (res, rej) => {
         try {
-            await inputCheck(page)
-            await page.waitForTimeout(1000)
-            await page.type('#phone', number, {
-                delay: 20
+            const browser = await pup.launch({
+                args: ['--no-sandbox', '--disable-setuid-sandbox']
+                //headless: false,
+                //product: 'firefox'
             })
-
-            const btnPos = await buttonCheck(page)
-            await page.waitForTimeout(5000)
-            await page.keyboard.press('Enter')
-
-            await page.waitForTimeout(3000)
+            const page = await browser.newPage()
+            await page.goto('https://www.whitepages.com/phone/'+number)
 
             const validity = await validCheck(page, number)
+            
+            await browser.close()
 
             res(validity)
-
         } catch (e) {
-            console.log(e)
-            rej()
+            rej(e)
         }
-    })
 
+    })
 }
