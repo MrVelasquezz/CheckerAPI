@@ -19,7 +19,8 @@ app.post('/check', async (req, res) => {
                 const result = await parser(pup, tel)
                 res.json({
                     phone: req.body.phone,
-                    valid: result
+                    valid: result[0],
+                    type: result[1]
                 }).end()
 
             } catch (e) {

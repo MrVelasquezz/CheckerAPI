@@ -11,7 +11,9 @@ module.exports = (pup, number) => {
                 //product: 'firefox'
             })
             const page = await browser.newPage()
-            await page.goto('https://www.whitepages.com/phone/'+number)
+            await page.goto('https://www.whitepages.com/phone/'+number, {
+                waitUntil: 'networkidle2'
+            })
 
             const validity = await validCheck(page, number)
             
