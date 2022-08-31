@@ -7,7 +7,7 @@ module.exports = (pup, number, type) => {
         try {
             const browser = await pup.launch({
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                //headless: false,
+                headless: false,
                 //product: 'firefox'
             })
             if (type == 'array') {
@@ -28,6 +28,7 @@ module.exports = (pup, number, type) => {
                     })
                 })
                 Promise.all(payload).then(values => {
+                    browser.close()
                     res(values)
                 })
             } else {
