@@ -7,28 +7,33 @@ module.exports = (pup, number, type) => {
         try {
             const browser = await pup.launch({
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                headless: false,
+                //headless: false,
                 //product: 'firefox'
             })
             if (type == 'array') {
                 let payload = number.map(item => {
                     return new Promise(async (res, rej) => {
-                        const page = await browser.newPage()
-                        await page.goto('https://www.whitepages.com/phone/' + item, {
-                            waitUntil: 'networkidle2'
-                        })
-                
-                        const validity = await validCheck(page, item)
-                
-                        res({
-                            phone: item,
-                            valid: validity[0],
-                            type: validity[1]
-                        })
+                        try {
+                            const page = await browser.newPage()
+                            await page.goto('https://www.whitepages.com/phone/' + item, {
+                                waitUntil: 'networkidle2'
+                            })
+
+                            const validity = await validCheck(page, item)
+
+                            res({
+                                phone: item,
+                                valid: validity[0],
+                                type: validity[1]
+                            })
+                        } catch (e) {
+                            rej('Phone number is invalid '+item)
+                        }
                     })
                 })
-                Promise.all(payload).then(values => {
+                Promise.allSettled(payload).then(values => {
                     browser.close()
+                    console.log(values)
                     res(values)
                 })
             } else {

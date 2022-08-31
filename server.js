@@ -12,6 +12,16 @@ const app = express()
 
 app.use(express.json())
 
+app.use('/check', (req, res, next) => {
+    console.log(req.get('Content-Length'))
+    if(req.get('Content-Length') <= 550){
+        next()
+    }
+    else{
+        res.json({status: 'error', description: 'request is too long'}).end()
+    }
+})
+
 app.post('/check', async (req, res) => {
     if (req.body.phone) {
         if(Array.isArray(req.body.phone) && req.body.phone.length > 0) {
