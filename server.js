@@ -1,16 +1,17 @@
-const pup = require('puppeteer-extra')
-const Stealth = require('puppeteer-extra-plugin-stealth')
 const express = require('express')
 require('dotenv').config()
-
-pup.use(Stealth())
 
 const parser = require('./src/engine/parser')
 const tmsg = require('./src/engine/tmsg')
 
 const app = express()
 
+
 app.use(express.json())
+
+app.listen(process.env.PORT, async () => {
+    console.log('Server is running on port ' + process.env.PORT)
+})
 
 app.use('/check', (req, res, next) => {
     console.log(req.get('Content-Length'))
@@ -27,7 +28,7 @@ app.post('/check', async (req, res) => {
         if(Array.isArray(req.body.phone) && req.body.phone.length > 0) {
             const tel_arr = req.body.phone
             try {
-                const result = await parser(pup, tel_arr, 'array')
+                const result = await parser(tel_arr, 'array')
                 console.log(tmsg(), 'Response sent')
                 res.json(result).end()
 
@@ -52,5 +53,3 @@ app.post('/check', async (req, res) => {
         }).end()
     }
 })
-
-app.listen(process.env.PORT, () => console.log('Server is running on port ' + process.env.PORT))
